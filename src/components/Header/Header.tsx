@@ -1,6 +1,10 @@
 import {FC} from 'react'
 
-export const Header:FC = () => {
+type HeaderProps ={
+  onClickCard: () => void
+}
+
+export const Header:FC<HeaderProps> = ({onClickCard}) => {
   return (
     <header className="d-flex justify-between align-center p-40">
       <div className="d-flex align-center">
@@ -11,8 +15,8 @@ export const Header:FC = () => {
         </div>
       </div>
       <ul className="d-flex">
-        <li className="mr-30">
-          <img src="/img/cart.svg" alt="cart" width={18} height={18} />
+        <li onClick={onClickCard} className="mr-30 cu-p">
+          <img  src="/img/cart.svg" alt="cart" width={18} height={18} />
           <span>1205 $</span>
         </li>
         <li>

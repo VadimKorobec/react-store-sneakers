@@ -1,9 +1,14 @@
 import { FC } from "react";
 import { Button } from "../Button/Button";
 
-export const Drawer: FC = () => {
+type DrawerProps ={
+  onClickCard:()=>void
+}
+
+
+export const Drawer: FC<DrawerProps> = ({onClickCard}) => {
   return (
-    <div style={{ display: "none" }} className="overlay">
+    <div  className="overlay">
       <div className="drawer ">
         <h2 className="d-flex justify-between mb-30">
           Shopping cart
@@ -11,6 +16,8 @@ export const Drawer: FC = () => {
             className="removeBtn cu-p"
             src="/img/btn-remove.svg"
             alt="remove"
+            onClick={onClickCard}
+
           />
         </h2>
         <div className="items " style={{ flex: "1" }}>
