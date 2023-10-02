@@ -1,7 +1,11 @@
-import { ListItem } from "../ListItem/ListItem";
 import { Header } from "../Header/Header";
 import { Search } from "../Search/Search";
 import { Drawer } from "../Drawer/Drawer";
+import { List } from "../List/List";
+
+
+
+
 
 export const App = () => {
   return (
@@ -14,7 +18,7 @@ export const App = () => {
           <Search />
         </div>
         <div className="d-flex">
-          <ListItem />
+          <List  />
         </div>
       </div>
     </div>

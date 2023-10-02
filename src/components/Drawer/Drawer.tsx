@@ -6,12 +6,12 @@ export const Drawer: FC = () => {
     <div style={{ display: "none" }} className="overlay">
       <div className="drawer ">
         <h2 className="d-flex justify-between mb-30">
-          Shopping cart{" "}
+          Shopping cart
           <img
             className="removeBtn cu-p"
             src="/img/btn-remove.svg"
             alt="remove"
-          />{" "}
+          />
         </h2>
         <div className="items " style={{ flex: "1" }}>
           <div className="cartItem d-flex align- mb-20">

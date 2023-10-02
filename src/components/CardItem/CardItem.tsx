@@ -1,6 +1,6 @@
 import {FC} from 'react'
 
-export const ListItem:FC = () => {
+export const CardItem:FC = () => {
   return (
     <div className="card">
             <div className="favorite">
