@@ -1,11 +1,18 @@
 import { FC } from "react";
 import { CardItem } from "../CardItem/CardItem";
+import { Item } from "../../types/types";
 
-export const List: FC = () => {
-  
+interface ListItemProps{
+  items:Item[]
+}
+
+export const List: FC<ListItemProps> = ({items}) => {
   return (
     <>
-      <CardItem />
+    {items.map(item =>(
+      <CardItem key={item.id} item={item} />
+    ))}
+      
     </>
   );
 };

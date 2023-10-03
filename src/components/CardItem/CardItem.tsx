@@ -1,9 +1,14 @@
 import { FC, useState } from "react";
 import styles from "./CardItem.module.scss";
+import { Item } from "../../types/types";
 
-export const CardItem: FC = () => {
+interface CardItemProps{
+  item:Item
+}
+
+export const CardItem: FC<CardItemProps> = ({item}) => {
   const [isAdded, setIsAdded] = useState<boolean>(false);
-  const [isFavorite,setIsFavorite] = useState(false)
+  const [isFavorite,setIsFavorite] = useState<boolean>(false)
   
   const handleClickAdd = () => {
     setIsAdded(!isAdded);
@@ -18,12 +23,12 @@ export const CardItem: FC = () => {
       <div className={styles.favorite}>
         <img onClick={handleFaviriteAdd} src={isFavorite ? '/img/liked.svg' : '/img/unliked.svg'} alt="unlike" />
       </div>
-      <img src="/img/sneakers/1.jpg" alt="sneakers" width={133} height={112} />
-      <h5>Men's Nike Blazer Mid Suede Sneakers</h5>
+      <img src={item.imageUrl} alt="sneakers" width={133} height={112} />
+      <h5>{item.title}</h5>
       <div className="d-flex justify-between align-center">
         <div className="d-flex flex-column ">
           <span>Price:</span>
-          <b>12 999 $</b>
+          <b>{item.price} $</b>
         </div>
         <img
           style={{ cursor: "pointer" }}
