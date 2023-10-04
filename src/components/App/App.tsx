@@ -10,28 +10,36 @@ import { Item } from "../../types/types";
 export const App = () => {
   const [cartOpened, setCartOpened] = useState<boolean>(false);
   const [items, setItems] = useState<Item[]>([]);
-  
-  
+  const [cartItems, setCartItems] = useState<Item[]>([]);
 
   useEffect(() => {
-    const fetchItems = async()=>{
+    const fetchItems = async () => {
       try {
-        const response = await axios.get<Item[]>('https://651adfbd340309952f0df995.mockapi.io/items')
-        setItems(response.data) 
+        const response = await axios.get<Item[]>(
+          "https://651adfbd340309952f0df995.mockapi.io/items"
+        );
+        setItems(response.data);
       } catch (error) {
-        alert(error)
+        alert(error);
       }
-    }
-   fetchItems()
+    };
+    fetchItems();
   }, []);
 
   const handleCardClick = () => {
     setCartOpened(!cartOpened);
   };
 
+  const handleAddToCart = (obj:Item) => {
+    setCartItems(prev =>[...prev, obj]);
+  };
+
+
   return (
     <div className="wrapper clear">
-      {cartOpened && <Drawer onClickCard={handleCardClick} />}
+      {cartOpened && (
+        <Drawer cartItems={cartItems} onClickCard={handleCardClick} />
+      )}
       <Header onClickCard={handleCardClick} />
       <div className="content  p-40">
         <div className="d-flex align-center justify-between mb-40">
@@ -39,7 +47,7 @@ export const App = () => {
           <Search />
         </div>
         <div className="d-flex flex-wrap">
-          <List items={items}/>
+          <List addToCart={handleAddToCart} items={items} />
         </div>
       </div>
     </div>

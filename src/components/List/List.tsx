@@ -4,13 +4,14 @@ import { Item } from "../../types/types";
 
 interface ListItemProps{
   items:Item[]
+  addToCart:(obj:Item)=> void
 }
 
-export const List: FC<ListItemProps> = ({items}) => {
+export const List: FC<ListItemProps> = ({items,addToCart}) => {
   return (
     <>
     {items.map(item =>(
-      <CardItem key={item.id} item={item} />
+      <CardItem addToCart={addToCart} key={item.id} item={item} />
     ))}
       
     </>

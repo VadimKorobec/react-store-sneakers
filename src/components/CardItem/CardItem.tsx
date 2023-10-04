@@ -5,13 +5,15 @@ import styles from "./CardItem.module.scss";
 
 interface CardItemProps{
   item:Item
+  addToCart:(obj:Item)=>void
 }
 
-export const CardItem: FC<CardItemProps> = ({item}) => {
+export const CardItem: FC<CardItemProps> = ({item:{id,title,price,imageUrl},addToCart}) => {
   const [isAdded, setIsAdded] = useState<boolean>(false);
   const [isFavorite,setIsFavorite] = useState<boolean>(false)
   
   const handleClickAdd = () => {
+    addToCart({id,title,price,imageUrl})
     setIsAdded(!isAdded);
   };
 
@@ -24,12 +26,12 @@ export const CardItem: FC<CardItemProps> = ({item}) => {
       <div className={styles.favorite}>
         <img onClick={handleFaviriteAdd} src={isFavorite ? '/img/liked.svg' : '/img/unliked.svg'} alt="unlike" />
       </div>
-      <img src={item.imageUrl} alt="sneakers" width={133} height={112} />
-      <h5>{item.title}</h5>
+      <img src={imageUrl} alt="sneakers" width={133} height={112} />
+      <h5>{title}</h5>
       <div className="d-flex justify-between align-center">
         <div className="d-flex flex-column ">
           <span>Price:</span>
-          <b>{item.price} $</b>
+          <b>{price} $</b>
         </div>
         <img
           style={{ cursor: "pointer" }}
