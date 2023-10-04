@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
-import styles from "./CardItem.module.scss";
 import { Item } from "../../types/types";
+
+import styles from "./CardItem.module.scss";
 
 interface CardItemProps{
   item:Item
