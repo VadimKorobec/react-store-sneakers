@@ -34,6 +34,8 @@ export const App = () => {
     setCartItems(prev =>[...prev, obj]);
   };
 
+  
+
 
   return (
     <div className="wrapper clear">
