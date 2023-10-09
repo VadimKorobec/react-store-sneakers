@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { Header } from "../Header/Header";
-import { Search } from "../Search/Search";
 import { Drawer } from "../Drawer/Drawer";
-import { List } from "../List/List";
 import { Item } from "../../types/types";
+import { CardItem } from "../CardItem/CardItem";
 
 export const App = () => {
   const [cartOpened, setCartOpened] = useState<boolean>(false);
   const [items, setItems] = useState<Item[]>([]);
   const [cartItems, setCartItems] = useState<Item[]>([]);
+  const [searchValue, setSearchValue] = useState<string>("");
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -30,12 +30,17 @@ export const App = () => {
     setCartOpened(!cartOpened);
   };
 
-  const handleAddToCart = (obj:Item) => {
-    setCartItems(prev =>[...prev, obj]);
+  const handleAddToCart = (obj: Item) => {
+    setCartItems((prev) => [...prev, obj]);
   };
 
-  
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
 
+  const handleClickClear = () => {
+    setSearchValue("");
+  };
 
   return (
     <div className="wrapper clear">
@@ -46,10 +51,30 @@ export const App = () => {
       <div className="content  p-40">
         <div className="d-flex align-center justify-between mb-40">
           <h1>All sneakers</h1>
-          <Search />
+          <div className="search-block d-flex">
+            <img src="/img/search.svg" alt="search" />
+            {searchValue && (
+              <img
+                onClick={handleClickClear}
+                className="clear cu-p"
+                src="/img/btn-remove.svg"
+                alt="clear"
+              />
+            )}
+            <input
+              onChange={handleSearch}
+              type="text"
+              placeholder="Search..."
+              value={searchValue}
+            />
+          </div>
         </div>
         <div className="d-flex flex-wrap">
-          <List addToCart={handleAddToCart} items={items} />
+          {items
+            .filter((item) => item.title.toLowerCase().includes(searchValue))
+            .map((item) => (
+              <CardItem addToCart={handleAddToCart} key={item.id} item={item} />
+            ))}{" "}
         </div>
       </div>
     </div>
