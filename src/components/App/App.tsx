@@ -23,7 +23,19 @@ export const App = () => {
         alert(error);
       }
     };
+
+    const fetchItemsCart = async () => {
+      try {
+        const response = await axios.get<Item[]>(
+          "https://651adfbd340309952f0df995.mockapi.io/cart"
+        );
+        setCartItems(response.data);
+      } catch (error) {
+        alert(error);
+      }
+    };
     fetchItems();
+    fetchItemsCart();
   }, []);
 
   const handleCardClick = () => {
@@ -31,7 +43,14 @@ export const App = () => {
   };
 
   const handleAddToCart = (obj: Item) => {
+    axios.post("https://651adfbd340309952f0df995.mockapi.io/cart", obj);
+
     setCartItems((prev) => [...prev, obj]);
+  };
+
+  const handleRemoveItem = (id:string) => {
+    axios.delete(`https://651adfbd340309952f0df995.mockapi.io/cart/${id}`);
+     setCartItems((prev) => prev.filter(item => item.id !== id));
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +64,7 @@ export const App = () => {
   return (
     <div className="wrapper clear">
       {cartOpened && (
-        <Drawer cartItems={cartItems} onClickCard={handleCardClick} />
+        <Drawer cartItems={cartItems} onClickCard={handleCardClick} onRemove={handleRemoveItem} />
       )}
       <Header onClickCard={handleCardClick} />
       <div className="content  p-40">
@@ -71,7 +90,9 @@ export const App = () => {
         </div>
         <div className="d-flex flex-wrap">
           {items
-            .filter((item) => item.title.toLowerCase().includes(searchValue))
+            .filter((item) =>
+              item.title.toLowerCase().includes(searchValue.toLowerCase())
+            )
             .map((item) => (
               <CardItem addToCart={handleAddToCart} key={item.id} item={item} />
             ))}{" "}
