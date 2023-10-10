@@ -1,17 +1,17 @@
 import { FC } from "react";
 
 import { Button } from "../Button/Button";
-import { Item } from "../../types/types";
+import { CartItem  } from "../../types/types";
 
 interface DrawerProps {
-  cartItems: Item[];
-  onClickCard: () => void;
-  onRemove: (id: string) => void;
+  cartItems: CartItem[];
+  closeCart: () => void;
+  onRemove: (id:string) => void;
 }
 
 export const Drawer: FC<DrawerProps> = ({
   cartItems,
-  onClickCard,
+  closeCart,
   onRemove,
 }) => {
   return (
@@ -23,10 +23,11 @@ export const Drawer: FC<DrawerProps> = ({
             className="removeBtn cu-p"
             src="/img/btn-remove.svg"
             alt="remove"
-            onClick={onClickCard}
+            onClick={closeCart}
           />
         </h2>
         {cartItems.length > 0 ? (
+          <div>
           <div className="items " style={{ flex: "1" }}>
             {cartItems.map((cartItem) => (
               <div key={cartItem.id} className="cartItem d-flex align- mb-20">
@@ -42,10 +43,26 @@ export const Drawer: FC<DrawerProps> = ({
                   className="removeBtn"
                   src="/img/btn-remove.svg"
                   alt="remove"
-                  onClick={() => onRemove(cartItem.id)}
+                  onClick={() => onRemove(cartItem.id!)}
                 />
               </div>
             ))}
+          </div>
+          <div className="cartTotalBlock">
+          <ul>
+            <li>
+              <span>Total:</span>
+              <div></div>
+              <b>21 498 $</b>
+            </li>
+            <li>
+              <span>Tax 5%:</span>
+              <div></div>
+              <b>1074 $</b>
+            </li>
+          </ul>
+          <Button  />
+        </div>
           </div>
         ) : (
           <div className="cartEmpty d-flex aligh-center justify-center flex-column flex">
@@ -59,28 +76,14 @@ export const Drawer: FC<DrawerProps> = ({
             />
             <h2>Cart empty</h2>
             <p className="opacity-6 " >Your cart is empty</p>
-            <button className="greenButton" style={{margin:'0 auto'}}>
+            <button onClick={closeCart} className="greenButton" style={{margin:'0 auto'}}>
               <img src="/img/arrow.svg" alt="arrow" />
               Come back
             </button>
           </div>
         )}
 
-        <div className="cartTotalBlock">
-          <ul>
-            <li>
-              <span>Total:</span>
-              <div></div>
-              <b>21 498 $</b>
-            </li>
-            <li>
-              <span>Tax 5%:</span>
-              <div></div>
-              <b>1074 $</b>
-            </li>
-          </ul>
-          <Button />
-        </div>
+        
       </div>
     </div>
   );

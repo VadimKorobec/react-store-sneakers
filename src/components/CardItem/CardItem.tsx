@@ -1,11 +1,11 @@
 import { FC, useState } from "react";
-import { Item } from "../../types/types";
+import {CartItem, Item} from "../../types/types";
 
 import styles from "./CardItem.module.scss";
 
 interface CardItemProps{
   item:Item
-  addToCart:(obj:Item)=>void
+  addToCart:(obj:CartItem)=>void
 }
 
 export const CardItem: FC<CardItemProps> = ({item:{id,title,price,imageUrl},addToCart}) => {

@@ -3,13 +3,13 @@ import axios from "axios";
 
 import { Header } from "../Header/Header";
 import { Drawer } from "../Drawer/Drawer";
-import { Item } from "../../types/types";
+import { CartItem, Item } from "../../types/types";
 import { CardItem } from "../CardItem/CardItem";
 
 export const App = () => {
   const [cartOpened, setCartOpened] = useState<boolean>(false);
   const [items, setItems] = useState<Item[]>([]);
-  const [cartItems, setCartItems] = useState<Item[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export const App = () => {
 
     const fetchItemsCart = async () => {
       try {
-        const response = await axios.get<Item[]>(
+        const response = await axios.get<CartItem[]>(
           "https://651adfbd340309952f0df995.mockapi.io/cart"
         );
         setCartItems(response.data);
@@ -42,7 +42,7 @@ export const App = () => {
     setCartOpened(!cartOpened);
   };
 
-  const handleAddToCart = (obj: Item) => {
+  const handleAddToCart = (obj:CartItem) => {
     axios.post("https://651adfbd340309952f0df995.mockapi.io/cart", obj);
 
     setCartItems((prev) => [...prev, obj]);
@@ -64,7 +64,7 @@ export const App = () => {
   return (
     <div className="wrapper clear">
       {cartOpened && (
-        <Drawer cartItems={cartItems} onClickCard={handleCardClick} onRemove={handleRemoveItem} />
+        <Drawer cartItems={cartItems} closeCart={handleCardClick} onRemove={handleRemoveItem} />
       )}
       <Header onClickCard={handleCardClick} />
       <div className="content  p-40">
@@ -93,8 +93,8 @@ export const App = () => {
             .filter((item) =>
               item.title.toLowerCase().includes(searchValue.toLowerCase())
             )
-            .map((item) => (
-              <CardItem addToCart={handleAddToCart} key={item.id} item={item} />
+            .map((item,idx) => (
+              <CardItem addToCart={handleAddToCart} key={idx} item={item} />
             ))}{" "}
         </div>
       </div>
